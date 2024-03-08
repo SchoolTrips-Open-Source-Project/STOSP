@@ -2,10 +2,9 @@ use diesel::prelude::*;
 use diesel::r2d2::{self, ConnectionManager};
 use dotenv::dotenv;
 
-// use crate::models::todo::Todo;
-
 pub type DBPool = r2d2::Pool<ConnectionManager<PgConnection>>;
 
+// Struct for maintaining DB pool connections
 pub struct Database {
     pub pool: DBPool,
 }

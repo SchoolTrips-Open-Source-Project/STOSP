@@ -3,29 +3,17 @@
 pub mod school_trips {
     diesel::table! {
         school_trips.auth (id) {
+            #[max_length = 255]
             id -> Varchar,
             mobile_number -> Varchar,
+            #[max_length = 10]
             country_code -> Varchar,
-            created_at -> Timestamp,
+            token -> Varchar,
+            created_at -> Timestamptz,
+            #[max_length = 10]
             otp -> Varchar,
-            updated_at -> Timestamp,
+            updated_at -> Timestamptz,
+            token_expiry -> Timestamptz,
         }
     }
-
-    diesel::table! {
-        school_trips.user (id) {
-            id -> Varchar,
-            user_name -> Nullable<Varchar>,
-            mobile_number -> Nullable<Varchar>,
-            country_code -> Nullable<Varchar>,
-            created_at -> Timestamp,
-            updated_at -> Timestamp,
-            user_pass -> Nullable<Varchar>,
-        }
-    }
-
-    diesel::allow_tables_to_appear_in_same_query!(
-        auth,
-        user,
-    );
 }
