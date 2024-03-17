@@ -1,12 +1,12 @@
-use crate::db;
+use crate::db::{self};
+use chrono::NaiveDateTime;
 use diesel::prelude::*;
 use serde::{Deserialize, Serialize};
-use chrono::NaiveDateTime;
 
+use super::user::Role;
 
 /// Auth table sturct
-#[derive(Serialize, Deserialize, AsChangeset, Queryable, Insertable)]
-#[serde(rename_all = "snake_case")]
+#[derive(AsChangeset, Queryable, Insertable)]
 #[diesel(table_name = db::schema::school_trips::auth)]
 pub struct Auth {
     pub id: String,
@@ -16,13 +16,15 @@ pub struct Auth {
     pub created_at: NaiveDateTime,
     pub otp: String,
     pub updated_at: NaiveDateTime,
-    pub token_expiry: NaiveDateTime
+    pub token_expiry: NaiveDateTime,
+    pub role: Role,
 }
 // Request and Response types..
 #[derive(Deserialize, Serialize)]
 pub struct AuthRequest {
     pub mobile_number: String,
     pub country_code: String,
+    pub role: Role,
 }
 
 #[derive(Deserialize, Serialize)]
@@ -33,7 +35,16 @@ pub struct AuthResponse {
 
 #[derive(Deserialize, Serialize)]
 pub struct VerifyAuthRequest {
-    pub otp: String
+    pub otp: String,
+}
+
+#[derive(Deserialize, Serialize)]
+pub struct VerifyAuthResponse {
+    pub name: Option<String>,
+    pub updated_at: String,
+    pub created_at: String,
+    pub id: String,
+    pub role: Role,
 }
 // TODO Add User creation
 #[derive(Deserialize, Serialize)]
@@ -49,4 +60,3 @@ pub struct RegisterUserResponse {
     pub mobile_number: Option<String>,
     pub country_code: Option<String>,
 }
-

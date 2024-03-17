@@ -1,8 +1,3 @@
-use actix_web::HttpResponse;
-use diesel::Insertable;
-use serde::Serialize;
-
-use crate::storage::result::QueryResult;
 // TODO: Added generic error handler
 // pub fn check_db_response_and_handle<T>(db_response: QueryResult<T>, get_response_closure: F) -> HttpResponse
 //     where T: Fn(T) -> R
