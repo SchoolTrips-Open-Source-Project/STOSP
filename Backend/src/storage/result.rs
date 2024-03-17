@@ -1,9 +1,7 @@
-
-
-/// Custom return type for DB queries 
+/// Custom return type for DB queries
 pub enum QueryResult<T> {
     Success,
-    Failed (String),
-    Record (T),
-    Records (Vec<T>),
+    Failed(String),
+    Record(T),
+    Records(Vec<T>),
 }
