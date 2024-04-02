@@ -9,7 +9,7 @@ mod routes;
 mod storage;
 mod transformers;
 mod types;
-mod utils;
+mod tools;
 
 #[derive(serde::Deserialize, serde::Serialize)]
 pub struct Response {
