@@ -40,11 +40,7 @@ pub struct VerifyAuthRequest {
 
 #[derive(Deserialize, Serialize)]
 pub struct VerifyAuthResponse {
-    pub name: Option<String>,
-    pub updated_at: String,
-    pub created_at: String,
-    pub id: String,
-    pub role: Role,
+    pub session_token: String,
 }
 // TODO Add User creation
 #[derive(Deserialize, Serialize)]

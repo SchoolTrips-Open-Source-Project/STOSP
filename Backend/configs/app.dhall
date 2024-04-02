@@ -1,4 +1,5 @@
 {
     default_otp = "7722"
 ,   auth_timeout = 3
+,   jwt_secret = "CFE0B48F9E026F89F1D6EDF1527B45DE09ADE01772B76318A930FC5C39E9B885"
 }

@@ -21,6 +21,7 @@ impl ServerState {
 pub struct ServerConfig {
     pub default_otp: String,
     pub auth_timeout: i64,
+    pub jwt_secret: String,
 }
 
 impl ServerConfig {

@@ -2,7 +2,7 @@ use std::io::Write;
 
 use crate::db::{
     self,
-    schema::school_trips::{sql_types::RoleType, users},
+    schema::school_trips::{sql_types::RoleType, users::{self}},
 };
 use chrono::NaiveDateTime;
 use diesel::{
@@ -48,7 +48,6 @@ pub struct User {
     pub name: Option<String>,
     pub updated_at: NaiveDateTime,
     pub created_at: NaiveDateTime,
-    pub session_token: String,
     pub id: String,
     pub mobile_number: String,
     pub role: Role,

@@ -2,13 +2,14 @@ use crate::storage::models;
 use crate::storage::models::auth::{Auth, AuthResponse, VerifyAuthResponse};
 use crate::storage::models::user::User;
 use crate::storage::result::QueryResult;
-use crate::utils;
-use crate::utils::utils::is_expired;
+use crate::tools;
+use crate::tools::contants::ONEWEEK;
+use crate::tools::session_utils::SessionToken;
+use crate::tools::utils::{get_current_time, get_exipry_from_minutes, is_expired};
 use crate::ServerState;
 use actix_web::web::{self};
 use actix_web::HttpResponse;
 use base64::{engine::general_purpose::STANDARD, Engine as _};
-use chrono::Utc;
 
 pub fn handle_auth(
     state: web::Data<ServerState>,
@@ -22,8 +23,8 @@ pub fn handle_auth(
             Some(existing_user) => {
                 let updated_auth = Auth {
                     token: id.clone(),
-                    updated_at: Utc::now().naive_utc(),
-                    token_expiry: utils::utils::get_exipry_from_minutes(state.config.auth_timeout),
+                    updated_at: get_current_time(),
+                    token_expiry: tools::utils::get_exipry_from_minutes(state.config.auth_timeout),
                     ..existing_user
                 };
                 updated_auth.update(&state.data.pool);
@@ -34,13 +35,13 @@ pub fn handle_auth(
                 let auth = Auth {
                     id: uuid::Uuid::new_v4().to_string().to_owned(),
                     token: id.clone(),
-                    created_at: Utc::now().naive_utc(),
-                    updated_at: Utc::now().naive_utc(),
+                    created_at: get_current_time(),
+                    updated_at: get_current_time(),
                     mobile_number: mobile_hash.clone(),
                     country_code: req.country_code.clone(),
                     otp: state.config.default_otp.clone(),
                     role: req.role.to_owned(),
-                    token_expiry: utils::utils::get_exipry_from_minutes(state.config.auth_timeout),
+                    token_expiry: tools::utils::get_exipry_from_minutes(state.config.auth_timeout),
                 };
                 match auth.insert(&state.data.pool) {
                     QueryResult::Success => {
@@ -82,34 +83,25 @@ pub fn handle_verify_auth(
                                 match user {
                                     Some(register_user) => {
                                         let upadated_user = User {
-                                            updated_at: Utc::now().naive_utc(),
+                                            updated_at: get_current_time(),
                                             ..register_user
                                         };
                                         response = VerifyAuthResponse {
-                                            name: upadated_user.name.clone(),
-                                            updated_at: upadated_user.updated_at.to_string(),
-                                            created_at: upadated_user.created_at.to_string(),
-                                            id: upadated_user.id.clone(),
-                                            role: upadated_user.role.clone(),
+                                            session_token : SessionToken::new(upadated_user.id.clone(), get_exipry_from_minutes(ONEWEEK).timestamp()).encode(state.config.jwt_secret.clone())
                                         };
                                         upadated_user.update(&state.data.pool);
                                     }
                                     None => {
                                         let user = User {
                                             name: None,
-                                            updated_at: Utc::now().naive_utc(),
-                                            created_at: Utc::now().naive_utc(),
-                                            session_token: uuid::Uuid::new_v4().to_string(),
+                                            updated_at: get_current_time(),
+                                            created_at: get_current_time(),
                                             id: uuid::Uuid::new_v4().to_string(),
                                             mobile_number: auth.mobile_number.to_owned(),
                                             role: auth.role.to_owned(),
                                         };
                                         response = VerifyAuthResponse {
-                                            name: user.name.clone(),
-                                            updated_at: user.updated_at.to_string(),
-                                            created_at: user.created_at.to_string(),
-                                            id: user.id.clone(),
-                                            role: user.role.clone(),
+                                            session_token : SessionToken::new(user.id.clone(), get_exipry_from_minutes(ONEWEEK).timestamp()).encode(state.config.jwt_secret.clone())
                                         };
                                         user.insert(&state.data.pool);
                                     }

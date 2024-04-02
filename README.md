@@ -16,3 +16,9 @@ Open source project for school trips
 
 to create migrations
     diesel migration generate <file_name>
+
+
+Cargo Dependencies: 
+    1. cargo-run-script
+    2. cargo watch
+    3. diesel

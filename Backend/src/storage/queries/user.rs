@@ -3,7 +3,6 @@ use diesel::QueryDsl;
 use diesel::RunQueryDsl;
 use diesel::SelectableHelper;
 
-use crate::db::schema::school_trips::users::dsl;
 use crate::db::schema::school_trips::users::{self};
 
 use crate::{

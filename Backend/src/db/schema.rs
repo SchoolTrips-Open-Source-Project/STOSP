@@ -36,12 +36,14 @@ pub mod school_trips {
             name -> Nullable<Varchar>,
             created_at -> Timestamptz,
             updated_at -> Timestamptz,
-            session_token -> Varchar,
             mobile_number -> Varchar,
             role -> RoleType,
             id -> Varchar,
         }
     }
 
-    diesel::allow_tables_to_appear_in_same_query!(auth, users,);
+    diesel::allow_tables_to_appear_in_same_query!(
+        auth,
+        users,
+    );
 }

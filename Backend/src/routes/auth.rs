@@ -1,5 +1,5 @@
 use crate::{
-    handlers::auth::auth::{handle_auth, handle_verify_auth},
+    handlers::auth::{handle_auth, handle_verify_auth},
     storage::models,
     ServerState,
 };

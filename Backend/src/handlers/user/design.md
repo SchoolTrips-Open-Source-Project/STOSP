@@ -13,7 +13,6 @@ User table will consist of
 JWT - 
 {
     mobileNumber :: String,
-    currentSession :: String,
-    session_start_time :: UTC,
-    session_expiry_time :: UTC
+    session_expiry_time :: UTC,
+    id:: String
 }
