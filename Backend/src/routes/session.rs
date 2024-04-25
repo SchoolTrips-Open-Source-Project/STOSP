@@ -15,7 +15,7 @@ pub async fn verify_session(state: web::Data<ServerState>, req: HttpRequest) -> 
                     get_token_from_bearer(token.to_str().unwrap().to_owned()),
                     state.config.jwt_secret.to_owned(),
                 ) {
-                    Some(token) => HttpResponse::Ok().body("Authorized").into(),
+                    Some(_) => HttpResponse::Ok().body("Authorized").into(),
                     None => HttpResponse::Unauthorized().body("UnAuthorized").into(),
                 }
             }

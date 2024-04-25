@@ -20,7 +20,7 @@ pub fn get_current_time() -> NaiveDateTime {
     Utc::now().naive_utc()
 }
 
-pub fn get_token_from_bearer(token: String) -> String{
+pub fn get_token_from_bearer(token: String) -> String {
     if token.starts_with("Bearer") {
         match token.strip_prefix("Bearer") {
             Some(token) => token.trim().to_owned(),
@@ -29,4 +29,9 @@ pub fn get_token_from_bearer(token: String) -> String{
     } else {
         token
     }
+}
+
+pub fn get_file_name_without_extension(file: String) -> String {
+    let splits: Vec<&str> = file.split(".").collect();
+    return splits.get(0).unwrap().to_string();
 }

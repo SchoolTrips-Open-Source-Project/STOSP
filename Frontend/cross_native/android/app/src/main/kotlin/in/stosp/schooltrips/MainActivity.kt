@@ -1,4 +1,4 @@
-package com.example.cross_native
+package `in`.stosp.schooltrips
 
 import io.flutter.embedding.android.FlutterActivity
 
