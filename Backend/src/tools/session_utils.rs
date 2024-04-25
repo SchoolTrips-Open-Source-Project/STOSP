@@ -2,7 +2,6 @@ use std::collections::HashSet;
 
 use jsonwebtoken::{DecodingKey, EncodingKey, Header, TokenData, Validation};
 use serde::{Deserialize, Serialize};
-use jsonwebtoken::errors::Result;
 
 use super::utils::get_current_time;
 

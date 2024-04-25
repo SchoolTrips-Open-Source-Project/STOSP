@@ -6,4 +6,4 @@ file = "src/db/schema.rs"
 schema = "school_trips"
 
 [migrations_directory]
-dir = "migrations"
+dir = "../../migrations"
