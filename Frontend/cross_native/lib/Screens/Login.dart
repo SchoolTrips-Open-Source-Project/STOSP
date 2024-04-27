@@ -1,8 +1,7 @@
 import 'dart:math';
 
+import 'package:cross_native/API/Auth.dart';
 import 'package:cross_native/Components/BackBtn.dart';
-import 'package:cross_native/Components/GeneralInput.dart';
-import 'package:cross_native/Components/PrimaryButton.dart';
 import 'package:cross_native/Utlis/Colors.dart';
 import 'package:cross_native/Utlis/helpers.dart';
 import 'package:flutter/cupertino.dart';
@@ -30,7 +29,8 @@ class _Login extends State<Login> {
   }
 
   void _onGetOTPClicked() {
-    Navigator.pushNamed(context, '/createProfile');
+    Future authResp =  authUser(phone);
+    Navigator.pushNamed(context, '/otp');
   }
 
   bool _checkOTPBtnEnabled() {
@@ -59,7 +59,7 @@ class _Login extends State<Login> {
               ),
             ),
             phoneNumberInput(),
-            const Spacer(),
+            const Spacer(flex: 1,),
             getOTPButton(),
           ],
         ),
