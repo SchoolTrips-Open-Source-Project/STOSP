@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../Components/GeneralInput.dart';
 
 class CreateProfile extends StatefulWidget {
   const CreateProfile({super.key});
@@ -22,10 +21,24 @@ class _CreateProfileState extends State<CreateProfile> {
   }
 
   void _typingFullName(String fullName) {
-    this.fullName = fullName;
+    setState(() {
+      this.fullName = fullName;
+    });
   }
 
-  void _typingEmail(String email) {}
+  void _typingEmail(String email) {
+    setState(() {
+      this.email = email;
+    });
+  }
+
+  bool _checkSaveBtnEnabled(){
+    return fullName.isNotEmpty && email.isNotEmpty;
+  }
+
+  void _saveBtnClicked(){
+    Navigator.pushNamed(context, "/home");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,8 +82,50 @@ class _CreateProfileState extends State<CreateProfile> {
           ),
           inputBox("Full Name", _typingFullName),
           inputBox("Email", _typingEmail),
+          saveProfileBtn()
         ],
       ),
     )));
+  }
+
+  Widget inputBox(String hint, Function(String) onChanged) {
+    return Container(
+      margin: const EdgeInsets.only(left: 16, right: 16, top: 20),
+      child: TextField(
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+          ),
+          hintText:hint,
+          hintStyle: TextStyle(
+            color: "#D0D0D0".toColor(),
+          ),
+          contentPadding: const EdgeInsets.all(20),
+        ),
+        onChanged: onChanged,
+      ),
+    );
+  }
+
+  Widget saveProfileBtn() {
+    return Container(
+      margin: const EdgeInsets.only(left: 26, top: 16, right: 27, bottom: 20),
+      child: TextButton(
+        style: TextButton.styleFrom(
+          minimumSize: const Size.fromHeight(54),
+          backgroundColor: _checkSaveBtnEnabled() ? "#008955".toColor() :  "#008955".toColor().withOpacity(0.5),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        onPressed:_checkSaveBtnEnabled() ?  _saveBtnClicked : null,
+        child: Text(
+          "Save",
+          style: TextStyle(
+            color: "#FFFFFF".toColor(),
+          ),
+        ),
+      ),
+    );
   }
 }

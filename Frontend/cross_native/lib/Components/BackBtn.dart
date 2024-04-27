@@ -9,7 +9,7 @@ Widget backBtn(void Function() backBtnClicked){
     onTap: backBtnClicked,
     child: Row(children: [
       Container(
-        margin: const EdgeInsets.all( 8),
+        margin: const EdgeInsets.all(9.5),
         child: Image.asset(
           'assets/images/st_ic_angle_left.png',
           height: 24,
