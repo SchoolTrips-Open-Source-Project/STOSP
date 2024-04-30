@@ -1,6 +1,5 @@
 use crate::storage::models;
 use crate::storage::models::auth::{Auth, VerifyAuthResponse};
-use crate::storage::models::geometry::ServiceabilityRequest;
 use crate::storage::models::user::User;
 use crate::storage::result::QueryResult;
 use crate::tools::contants::ONEWEEK;
@@ -9,7 +8,6 @@ use crate::tools::utils::{get_current_time, get_exipry_from_minutes, is_expired}
 use crate::ServerState;
 use actix_web::web::{self};
 use actix_web::HttpResponse;
-
 
 pub fn handle_verify_auth(
     state: web::Data<ServerState>,
@@ -36,7 +34,12 @@ pub fn handle_verify_auth(
                                             ..register_user
                                         };
                                         response = VerifyAuthResponse {
-                                            session_token : SessionToken::new(upadated_user.id.clone(), get_exipry_from_minutes(ONEWEEK).timestamp()).encode(state.config.jwt_secret.clone())
+                                            session_token: SessionToken::new(
+                                                upadated_user.id.clone(),
+                                                get_exipry_from_minutes(ONEWEEK).timestamp(),
+                                            )
+                                            .encode(state.config.jwt_secret.clone()),
+                                            user: upadated_user.to_owned()
                                         };
                                         upadated_user.update(&state.data.pool);
                                     }
@@ -50,7 +53,12 @@ pub fn handle_verify_auth(
                                             role: auth.role.to_owned(),
                                         };
                                         response = VerifyAuthResponse {
-                                            session_token : SessionToken::new(user.id.clone(), get_exipry_from_minutes(ONEWEEK).timestamp()).encode(state.config.jwt_secret.clone())
+                                            session_token: SessionToken::new(
+                                                user.id.clone(),
+                                                get_exipry_from_minutes(ONEWEEK).timestamp(),
+                                            )
+                                            .encode(state.config.jwt_secret.clone()),
+                                            user: user.to_owned()
                                         };
                                         user.insert(&state.data.pool);
                                     }
@@ -69,13 +77,4 @@ pub fn handle_verify_auth(
         },
         _ => HttpResponse::InternalServerError().body("INTERNAL_ERROR"),
     }
-}
-
-
-pub fn origin_serviceability(
-    state: web::Data<ServerState>,
-    req: web::Json<ServiceabilityRequest>,
-) -> HttpResponse {
-    // geo::Polygon::
-    return HttpResponse::InternalServerError().body("INTERNAL_ERROR");
 }
