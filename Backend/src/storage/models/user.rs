@@ -2,7 +2,10 @@ use std::io::Write;
 
 use crate::db::{
     self,
-    schema::school_trips::{sql_types::RoleType, users::{self}},
+    schema::school_trips::{
+        sql_types::RoleType,
+        users::{self},
+    },
 };
 use chrono::NaiveDateTime;
 use diesel::{
@@ -42,7 +45,7 @@ impl FromSql<RoleType, Pg> for Role {
 }
 
 /// User table sturct
-#[derive(AsChangeset, Queryable, Insertable, Selectable)]
+#[derive(AsChangeset, Queryable, Insertable, Selectable, Serialize, Deserialize, Clone)]
 #[diesel(table_name = db::schema::school_trips::users)]
 pub struct User {
     pub name: Option<String>,

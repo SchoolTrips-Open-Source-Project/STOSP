@@ -1,12 +1,14 @@
-use diesel::sql_types::Bool;
-use geo::{coord, Coord};
 use serde::{Deserialize, Serialize};
 
-
+#[derive(Deserialize, Serialize)]
+pub struct ServiceabilityRequest {
+    pub point: LatLong,
+}
 
 #[derive(Deserialize, Serialize)]
-pub struct  ServiceabilityRequest {
-    pub point : Coord,
+pub struct LatLong {
+    pub lat: f64,
+    pub lon: f64,
 }
 
 #[derive(Deserialize, Serialize)]

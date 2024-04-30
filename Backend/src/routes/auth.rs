@@ -1,5 +1,7 @@
 use crate::{
-    handlers::auth::{auth::handle_auth, auth_verify::handle_verify_auth}, storage::models, ServerState
+    handlers::auth::{auth::handle_auth, auth_verify::handle_verify_auth},
+    storage::models,
+    ServerState,
 };
 use actix_web::{post, web, HttpResponse};
 

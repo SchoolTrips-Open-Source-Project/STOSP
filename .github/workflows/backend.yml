@@ -1,9 +1,6 @@
 name: Rust
 
-on: 
-  pull_request:
-    paths:
-      - 'Backend/**'
+on: [pull_request]
 
 env:
   CARGO_TERM_COLOR: always
@@ -13,7 +10,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: Backend/

@@ -3,7 +3,7 @@ use chrono::NaiveDateTime;
 use diesel::prelude::*;
 use serde::{Deserialize, Serialize};
 
-use super::user::Role;
+use super::user::{Role, User};
 
 /// Auth table sturct
 #[derive(AsChangeset, Queryable, Insertable)]
@@ -41,6 +41,7 @@ pub struct VerifyAuthRequest {
 #[derive(Deserialize, Serialize)]
 pub struct VerifyAuthResponse {
     pub session_token: String,
+    pub user: User,
 }
 // TODO Add User creation
 #[derive(Deserialize, Serialize)]

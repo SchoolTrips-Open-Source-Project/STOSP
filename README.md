@@ -14,6 +14,9 @@ Open source project for school trips
 
 ``cargo install diesel_cli``
 
+3. diesel migration run
+4. cargo run-script start
+
 to create migrations
     diesel migration generate <file_name>
 

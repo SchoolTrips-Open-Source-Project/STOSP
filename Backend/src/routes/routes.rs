@@ -7,6 +7,6 @@ pub fn add_all_routes(cfg: &mut web::ServiceConfig) {
             .service(super::auth::create_auth)
             .service(super::auth::verify_auth)
             .service(super::session::verify_session)
-            .service(super::serviceability::serviceability)
+            .service(super::serviceability::serviceability),
     );
 }
