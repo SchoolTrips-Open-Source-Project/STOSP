@@ -1,0 +1,25 @@
+name: Rust
+
+on: [pull_request]
+
+env:
+  CARGO_TERM_COLOR: always
+permissions: 
+  statuses: write
+  pull-requests: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Backend/crates/user/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build
+      run: cargo build --verbose
+    - name: Update Status
+      uses: ouzi-dev/commit-status-updater@v2
+      with:
+        status: "${{ job.status }}"
